@@ -1,0 +1,54 @@
+{% extends "common/base.html"%} {% load static %} {% block _content %}
+<style>
+    #sign-in-link {
+        text-decoration: none;
+
+    }
+
+    #outer {
+        display: table;
+        height: 100%;
+    }
+
+    #inner {
+        height: 50%;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .helptext {
+        display: none;
+    }
+</style>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" id="outer">
+            <div id="inner">
+                <div class="well" id="inner">
+                    <img class="img-responsive" src="{% static 'common/pi.png' %}" alt="Login Image">
+                    <hr />
+                    <div class="form-group">
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <table>
+                                {{form.as_table}}
+                            </table>
+                            <button class="btn btn-primary" type="submit">Sign Up</button>
+                            <p>Already have an account?
+                                <a href="{% url 'dashboard:login' %}">Sign In</a>
+                            </p>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+
+</div>
+{% endblock %} {% block _body_script %} $('document').ready(function(){ $('input').addClass('form-control'); }); {% endblock
+%}

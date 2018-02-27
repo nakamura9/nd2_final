@@ -1,0 +1,48 @@
+{% extends "common/window.html"%}
+{% load static %}
+{% block content %}
+<style>
+    #outer {
+        display: table;
+        height: 100%;
+    }
+
+    #inner {
+        height: 30%;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+</style>
+
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" id="outer">
+            <div id="inner">
+            <div class="well" id="inner">
+                <h3>About This site</h3>
+                <p>This site is provided as a Human Machine Interface(HMI) for the quality control camera system. It uses open source technologies and licenses for algorithms and the data processing techniques employed.</p>
+                
+                <h4>Terms of Use</h4>
+                <p>This software is provided as is with no warranty stated explicitly or implied. The software author will not be held responsible for any damages incurred thorugh proper use of the software or misuse by third parties. Distribution of this software is protected under the MIT license for open source software.
+                </p>
+
+                <p>Some of the technologies used by this software include...</p>
+                <ul>
+                    <li>Django</li>
+                    <li>OpenCV</li>
+                    <li>Arduino</li>
+                    <li>Raspberry Pi</li>
+                </ul>
+            </div>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    
+</div>
+{% endblock %}
+{% block _body_script %}
+$('document').ready(function(){
+    $('input').addClass('form-control');
+});
+
+{% endblock %}

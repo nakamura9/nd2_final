@@ -1,0 +1,97 @@
+{% extends 'common/window.html' %} {% block content %}
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="well">
+            <h3>Counters</h3>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Machine status</td>
+                        <td>OFF</td>
+                    </tr>
+                    <tr>
+                        <td>Boards run</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Errors Found</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Color Profiler</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="well">
+            <h3>Controls</h3>
+            <h5>Printer state</h5>
+            <button class="btn btn-success">Run</button>
+            <button class="btn btn-danger">Stop</button>
+            <h5>Mode</h5>
+            <label for="auto">Auto</label>
+            <input type="radio" class="form-control" name="mode" />
+            <label for="manual">Manual</label>
+            <input type="radio" class="form-control" name="mode" />
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="well">
+            <h3>Color Profiles</h3>
+            <p>Color 1:
+                <a href="#">change</a>
+            </p>
+            <label for="color-1">HEX value #</label>
+            <input class="form-control" type="text" name="color-1" />
+            <svg width="50" height="20">
+                <rect fill="red" width="50" height="20" />
+            </svg>
+            <p>Color 2:
+                <a href="#">change</a>
+            </p>
+            <label for="color-2">HEX value #</label>
+            <input class="form-control" type="text" name="color-2" />
+            <svg width="50" height="20">
+                <rect fill="red" width="50" height="20" />
+            </svg>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="well">
+            <h3>Last Error:</h3>
+            <img src="" alt="last error image">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="well">
+            <h3>Interest Points</h3>
+            <button class="btn btn-primary">Add</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="well">
+            <h3>Events</h3>
+            <ul>
+                <li>No events have been logged yet.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

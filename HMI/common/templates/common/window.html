@@ -1,0 +1,28 @@
+{% extends "common/base.html" %}
+
+{% block _content %}
+
+<nav class="navbar navbar-default" role="navigation">
+    <a class="navbar-brand" href="#">CV HMI</a>
+    <ul class="nav navbar-nav">
+        <li class="active">
+            <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+        </li>
+        <li>
+            <a href="{% url 'dashboard:about' %}">About</a>
+        </li>
+        <li>
+            <a href="{% url 'dashboard:logout' %}">Logout</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container">
+        {% block content %}
+        {% endblock %}    
+</div>
+{% endblock %}
+
+{% block _body_script %}
+    {% block body_script %}{% endblock %}
+{% endblock %}
