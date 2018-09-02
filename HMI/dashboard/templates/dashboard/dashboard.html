@@ -1,6 +1,18 @@
 {% extends 'common/window.html' %} {% block content %}
 
 <div class="row">
+    <div class="col-sm-12">
+        
+        <div class="well">
+            
+            <input type="file" name="image-file" id="image-file-id" class="form-control">
+            <a class="btn btn-primary" href="#interest-points" >Add Image</a>
+        </div>
+        
+    </div>
+</div>
+
+<div class="row">
     <div class="col-sm-4">
         <div class="well">
             <h3>Counters</h3>
@@ -15,59 +27,72 @@
                 <tbody>
                     <tr>
                         <td>Machine status</td>
-                        <td>OFF</td>
+                        <td id="counters-status">OFF</td>
                     </tr>
                     <tr>
                         <td>Boards run</td>
-                        <td>0</td>
+                        <td id="counters-boards-run">0</td>
                     </tr>
                     <tr>
                         <td>Errors Found</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Color Profiler</td>
-                        <td>0</td>
+                        <td id="counters-errors-found">0</td>
                     </tr>
                 </tbody>
             </table>
 
         </div>
+        <div class="well">
+            <h3>Color Saturation</h3>
+            <label for="color-1">Saturation</label>
+            <hr />
+            <button style="display: inline;" type="button" class="btn btn-default" onclick="decrement('saturation')">-</button>
+            <input type="text" name="saturation" value="0" />
+            <button style="display: inline;" type="button" class="btn btn-default" onclick="increment('saturation')">+</button>
+            <svg width="200" height="20">
+                <rect id="saturation-indicator" fill="blue" width="0" height="20" />
+            </svg>
+        </div>
+
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-8">
         <div class="well">
             <h3>Controls</h3>
-            <h5>Printer state</h5>
-            <button class="btn btn-success">Run</button>
-            <button class="btn btn-danger">Stop</button>
-            <h5>Mode</h5>
+            <h4>Mode</h4>
             <label for="auto">Auto</label>
-            <input type="radio" class="form-control" name="mode" />
+            <input type="radio" class="form-control" name="mode" value="auto" />
             <label for="manual">Manual</label>
-            <input type="radio" class="form-control" name="mode" />
+            <input type="radio" class="form-control" name="mode" value="manual" />
+            <div id="manual-controls" style="display:none;">
+                <fieldset>
+                    <legend>Manual controls:</legend>
+                    <h5>Printer state</h5>
+                    <button class="btn btn-success">Run</button>
+                    <button class="btn btn-danger">Stop</button>
+
+                    <h6>Printer 1</h6>
+                    <hr />
+                    <div>
+                        <center>
+                            <button style="display: inline;" type="button" class="btn btn-default" onclick="decrement('register-1')">-</button>
+                            <input name="register-1" style="display: inline;" type="text" value="0" /> mm
+                            <button style="display: inline;" type="button" class="btn btn-default" onclick="increment('register-1')">+</button>
+                        </center>
+                    </div>
+                    <h6>Printer 2</h6>
+                    <hr />
+                    <div>
+                        <center>
+                            <button style="display: inline;" type="button" class="btn btn-default" onclick="decrement('register-2')">-</button>
+                            <input name="register-2" style="display: inline;" type="text" value="0" /> mm
+                            <button style="display: inline;" type="button" class="btn btn-default" onclick="increment('register-2')">+</button>
+                        </center>
+                    </div>
+                </fieldset>
+            </div>
+
         </div>
     </div>
-    <div class="col-sm-4">
-        <div class="well">
-            <h3>Color Profiles</h3>
-            <p>Color 1:
-                <a href="#">change</a>
-            </p>
-            <label for="color-1">HEX value #</label>
-            <input class="form-control" type="text" name="color-1" />
-            <svg width="50" height="20">
-                <rect fill="red" width="50" height="20" />
-            </svg>
-            <p>Color 2:
-                <a href="#">change</a>
-            </p>
-            <label for="color-2">HEX value #</label>
-            <input class="form-control" type="text" name="color-2" />
-            <svg width="50" height="20">
-                <rect fill="red" width="50" height="20" />
-            </svg>
-        </div>
-    </div>
+
 </div>
 <div class="row">
     <div class="col-sm-6">
@@ -78,7 +103,7 @@
     </div>
     <div class="col-sm-6">
         <div class="well">
-            <h3>Interest Points</h3>
+            <h3 id="interest-points">Interest Points</h3>
             <button class="btn btn-primary">Add</button>
         </div>
     </div>
@@ -94,4 +119,37 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock %} {% block body_script %} 
+
+    $(document).ready(function(){ 
+        $('input[name=saturation]').change(function(){ 
+            $('#saturation-indicator')
+                .attr('width', parseInt( $('input[name=saturation]').val())); 
+            }); 
+            $('input[name=mode]').change(function(){ 
+                console.log($('input[name=mode]:checked').val());
+                
+                if($('input[name=mode]:checked').val() == 'manual'){ 
+                    $("#manual-controls").show(); 
+                    $("#counters-status").text("MANUAL MODE");
+
+                }else{ 
+                    $("#manual-controls").hide(); 
+                    $("#counters-status").text("AUTO MODE"); 
+                } 
+            }); 
+        }); 
+        
+        function increment(input){ 
+            $("input[name="+ input + "]")
+                .val( parseInt($("input[name=" + input + "]").val()) + 1).trigger( 'change'); 
+            } 
+        
+        function decrement(input){
+
+            if($("input[name=" + input + "]").val() > 0){
+                $("input[name=" + input + "]")
+                .val( parseInt($("input[name=" + input + "]").val()) - 1).trigger( 'change'); 
+            } 
+        } 
+    {% endblock %}
