@@ -1,0 +1,24 @@
+{
+  "name": "feature_detector",
+  "version": "0.0.1",
+  "description": "a HMI in react for feature detection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nakamura9/nd2_final.git"
+  },
+  "keywords": [
+    "react",
+    "html",
+    "HMI"
+  ],
+  "author": "caleb kandoro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nakamura9/nd2_final/issues"
+  },
+  "homepage": "https://github.com/nakamura9/nd2_final#readme"
+}
