@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'ajax',
     'dashboard',
     'common',
+    'webpack_loader'
     
 ]
 
@@ -122,5 +123,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'common', 'static')
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'js/bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'assets', 'js', 'webpack-stats.json'),
+    }
+}
+
 LOGIN_URL = '/dashboard/login/'
 LOGIN_REDIRECT_URL = '/dashboard/dashboard/'

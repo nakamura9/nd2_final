@@ -20,5 +20,5 @@ urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^dashboard/', include('dashboard.urls', namespace='dashboard')),
     re_path(r'^common/', include('common.urls', namespace='common')),
-    re_path(r'^ajax/', include('ajax.urls', namespace='ajax'))
+    re_path(r'^api/', include('ajax.urls', namespace='api'))
 ]
