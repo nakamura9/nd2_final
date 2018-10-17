@@ -1,6 +1,6 @@
 import os 
 from scipy.ndimage import filters
-from PIL import Image
+
 
 import numpy as np
 from matplotlib import pyplot as plt
@@ -126,7 +126,7 @@ def match_twosided(desc1, desc2, threshold=0.5):
     matches_21 = match(desc2, desc1, threshold)
 
     ndx_12 = np.where(matches_12 >= 0)[0]
-
+    print(ndx_12)
     for n in ndx_12:
         if matches_21[matches_12[n]] != n:
             matches_12[n] = -1
@@ -172,7 +172,8 @@ def plot_matches(im1, im2, locs1, locs2, matchscores, show_below=False):
 
 if __name__ == "__main__":
     import sys
-    print("testing application")
+    from PIL import Image
+    
     simple_img = np.zeros((128,128))
     simple_img[32:96,32:96] = 255
     im1 = simple_img
@@ -183,12 +184,13 @@ if __name__ == "__main__":
     
     filtered1 = get_harris_points(compute_harris_response(im1, 1), 10)
     filtered2 = get_harris_points(compute_harris_response(im2, 1), 10)
-    print(filtered1)
+
     d1 = get_descriptors(im1, filtered1)
     d2 = get_descriptors(im2, filtered2)
-    
+
+
     matches = match_twosided(d1, d2)
-    plt.figure()
+    '''plt.figure()
     plt.gray()
     plot_matches(im1, im2, filtered1, filtered2, matches)
-    plt.show()
+    plt.show()'''

@@ -42,7 +42,6 @@ class ImageWidget extends Component{
     }
     render(){
         let renderedHTML = null;
-        console.log(this.state.file);
         if(this.state.file === ""){
             renderedHTML = 
             (<div>
@@ -62,48 +61,15 @@ class ImageWidget extends Component{
                         className="img-thumbnail"
                         src={this.state.fileObj} /><br />
                     <h6>Send to server for analysis</h6>
-                <form encType="multipart/form-data" method="POST" action="/api/image-upload">
-                    <input 
-                        name="image"
-                        type="file"
-                        onChange={this.handler}/>
-                    <input 
+                    <button 
                         className="btn btn-primary"
-                        type="submit" value="Upload" />
-                </form>
-                </div>    
+                        onClick={this.uploadHandler}
+                        disabled={this.state.uploaded}>Upload</button>
+                </div>
         }
-        const withFile = (<div>
-                        <h3>File Selected For Printing</h3>
-                            <img 
-                                className="img-thumbnail"
-                                src={this.state.fileObj} /><br />
-                            <h6>Send to server for analysis</h6>
-                        </div>
-                            );
-        const withoutFile = (
-            <div>
-                <h3>No Image file selected</h3>
-                <h6>Choose one from the file system</h6>
-            </div>
-        );
         return(
             <div className="well">
-                <div>
-                    { this.state.file === "" 
-                    ? withoutFile 
-                    : withFile
-                    } 
-                    <form encType="multipart/form-data" method="POST" action="/api/image-upload">
-                    <input 
-                        name="image"
-                        type="file"
-                        onChange={this.handler}/>
-                    <input 
-                        className="btn btn-primary"
-                        type="submit" value="Upload" />
-                </form>
-                </div>
+                {renderedHTML}
             </div>
         );
     }

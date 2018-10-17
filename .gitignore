@@ -1,3 +1,4 @@
 *.pyc
 *.sqlite3
 /HMI/assets/js/node_modules
+/HMI/media/*

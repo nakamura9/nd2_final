@@ -4,8 +4,7 @@ import StatusWidget from './containers/status_widget';
 import ControlsWidget from './containers/controls';
 import ImageWidget from './containers/image_window';
 import ColorProfiler from './containers/color_profiler';
-import InterestPoints from './components/interest_points';
-import EventsList from './components/events';
+import EventsList from './containers/events';
 
 const App = (props) => {
     return(
@@ -24,12 +23,9 @@ const App = (props) => {
                 </div>    
             </div>
             <div className="row">
-                <div className="col-sm-4">
+                <div className="col-sm-12">
                     <ColorProfiler />
                 </div>
-                <div className="col-sm-8">
-                    <InterestPoints />
-                </div>    
             </div>
             <div className="row">
                 <div className="col-sm-12">

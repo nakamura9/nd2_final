@@ -18,8 +18,6 @@ urlpatterns = [
         name='toggle-pigment-valve'),
     url(r'^toggle-base-valve/?$', views.toggle_base_valve, name='toggle-base-valve'),
     url(r'^toggle-agitator/?$', views.toggle_agitator, name='toggle-agitator'),
-    url(r'^get-interest-points/?$', views.get_interest_points, 
-        name='get-interest-points'),
     url(r'^get-events/?$', views.get_events, name='get-events'),
     url(r'^get-register-positions/?$', views.get_register_positions, 
         name='get-register-positions'),

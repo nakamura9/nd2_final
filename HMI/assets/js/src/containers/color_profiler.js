@@ -19,7 +19,7 @@ class ColorProfiler extends Component{
         agitator: true
     }
     componentDidMount(){
-        setInterval(this.tick, 3000);
+        //setInterval(this.tick, 3000);
     }
 
     tick = () =>{
