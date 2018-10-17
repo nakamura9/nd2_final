@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^get-events/?$', views.get_events, name='get-events'),
     url(r'^get-register-positions/?$', views.get_register_positions, 
         name='get-register-positions'),
+    url(r'^get-snapshot/?$', views.get_snapshot, name='get-snapshot')
 ]

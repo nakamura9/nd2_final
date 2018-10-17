@@ -32,6 +32,22 @@ def get_color_status(request):
     return JsonResponse(status)
 
 @csrf_exempt
+def get_snapshot(request):
+    print(request.FILES)
+    myfile = request.FILES['snapshot']
+    fs = FileSystemStorage()
+    filename = fs.save(myfile.name, myfile)
+    update_event('snapshot {} uploaded'.format(filename))
+    ed = ErrorDetector('media/' + filename)
+    ed.run()
+    print(ed.error)
+    update_event('{} error detected'.format(ed.error))
+    if ed.error:
+        CONN.write(bytes([b'H', b'9', ed.error, ed.error, 0, 0, b'F']))
+        resp = CONN.read(1)
+    return JsonResponse({'status': 'ok'})
+
+@csrf_exempt
 def image_upload(request):
     print(request.FILES)
     myfile = request.FILES['image']
@@ -41,9 +57,6 @@ def image_upload(request):
     img_p = ImageProcessor('media/' + filename)
     img_p.process()
     set_global_interest_points(img_p.interest_points)
-    ed = ErrorDetector('media/error.jpg')
-    ed.run()
-    print(ed.error)
     update_event('{} Interest points obtained'.format(len(img_p.interest_points)))
 
     return HttpResponseRedirect(reverse('dashboard:dashboard'))
@@ -96,7 +109,6 @@ def get_register_positions(request):
     #testing with 4 
     CONN.write(b'H944000F')
     resp = CONN.read(1)
-    print(resp)
     return JsonResponse({'status': 'ok'})
 
 def get_events(request):
