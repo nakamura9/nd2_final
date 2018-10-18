@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webpack_loader',
     'ajax',
     'dashboard',
     'common',
@@ -124,3 +125,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_URL = '/dashboard/login/'
 LOGIN_REDIRECT_URL = '/dashboard/dashboard/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets', 'js'),
+)
+
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'assets', 'js', 'webpack-stats.json'),
+    }
+}
