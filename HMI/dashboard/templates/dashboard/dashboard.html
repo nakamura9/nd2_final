@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'common/window.html' %} 
 {% load render_bundle from webpack_loader %}
 {% block content %}
@@ -159,3 +160,11 @@
 
 
     {% endblock %}
+=======
+{% extends 'common/window.html' %} {% block content %}
+{% load render_bundle from webpack_loader %}
+{% csrf_token %}
+<div id="react-root"></div>
+{% render_bundle "main" %}
+{% endblock %} 
+>>>>>>> 0b290601e4cc8d183c41a0abd02b919e95fd2a28

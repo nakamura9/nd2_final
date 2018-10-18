@@ -1,0 +1,6 @@
+{
+    "rollerDiameter": 50,
+    "resolution": 320,
+    "viewLength": 120,
+    "errorToleranceMM": 2
+}

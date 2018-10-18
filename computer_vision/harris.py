@@ -172,17 +172,18 @@ def plot_matches(im1, im2, locs1, locs2, matchscores, show_below=False):
 
 if __name__ == "__main__":
     import sys
-    print "testing application"
+    print("testing application")
     simple_img = np.zeros((128,128))
     simple_img[32:96,32:96] = 255
-    #im1 = simple_img
-    #im2 = np.copy(im1)
-    im1 = np.array(Image.open(sys.argv[1]).convert('L'))
+    im1 = simple_img
     im2 = np.copy(im1)
+    #im1 = np.array(Image.open(sys.argv[1]).convert('L'))
+    #im2 = np.copy(im1)
     
     
     filtered1 = get_harris_points(compute_harris_response(im1, 1), 10)
     filtered2 = get_harris_points(compute_harris_response(im2, 1), 10)
+    print(filtered1)
     d1 = get_descriptors(im1, filtered1)
     d2 = get_descriptors(im2, filtered2)
     
