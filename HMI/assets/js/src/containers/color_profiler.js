@@ -19,7 +19,7 @@ class ColorProfiler extends Component{
         agitator: true
     }
     componentDidMount(){
-        //setInterval(this.tick, 3000);
+        setInterval(this.tick, 3000);
     }
 
     tick = () =>{
@@ -81,14 +81,7 @@ class ColorProfiler extends Component{
 
     render(){
         let controls = null;
-        if(this.state.mode == "auto"){
-            controls = 
-                <div>
-                    <h4>Auto Mode enabled</h4>
-                    <p>Corrections of color deviations are currently being handled automatically .Set Mode to manual for greater control of color profiler.</p>
-                </div>                  
-        }else{
-            controls = 
+        controls = 
                 <div>
                     <h4>Color Profiler State</h4>
                     <h5>Pigment Valve</h5>
@@ -113,7 +106,7 @@ class ColorProfiler extends Component{
                     
                     
                 </div>
-        }
+        
         return(
             <div className="well">
                 <h3>Color Profiler</h3>
@@ -147,8 +140,6 @@ class ColorProfiler extends Component{
                         placeholder="rrrgggbbb"
                         type="text"
                         />
-                <RadioControls 
-                    handler={this.modeHandler}/>
                 {controls}
             </div>
         );

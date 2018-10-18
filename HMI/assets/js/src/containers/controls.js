@@ -32,39 +32,29 @@ class ControlsWidget extends Component{
     }
     
     printerOneHandler = (value) =>{
-        axios({
-            method: 'GET',
-            url: '/api/get-register-positions',
-            data: {
-                'unitOne': value,
-                'unitTwo': 0
-            }
-        });
         this.setState({printerOne: value});
     }
 
     printerTwoHandler = (value) =>{
         this.setState({printerTwo: value});
+       
+    }
+
+    setRegister = () =>{
+        console.log(this.state.printerOne);
         axios({
             method: 'GET',
             url: '/api/get-register-positions',
             data: {
-                'unitTwo': value,
-                'unitOne': 0
+                'unitTwo': this.state.printerOne,
+                'unitOne': this.state.printerTwo
             }
         });
     }
 
     render(){
         let controls = null;
-        if(this.state.mode == "auto"){
-            controls = 
-                <div>
-                    <h3>Auto Mode enabled</h3>
-                    <p>Corrections of prints are currently being handled automatically .Set Mode to manual for greater control of machine operation.</p>
-                </div>                  
-        }else{
-            controls = 
+        controls = 
                 <div>
                     <h3>Printer State</h3>
                     <ToggleButton 
@@ -80,13 +70,15 @@ class ControlsWidget extends Component{
                     <CompoundNumberInput 
                         handler={this.printerTwoHandler}/>
                 </div>
-        }
+        
         return(
             <div className="well">
-                <RadioControls 
-                    handler={this.modeHandler}/>
-                    
                 {controls}
+                <button 
+                    className="btn btn-primary"
+                    onClick={this.setRegister}>
+                    Register Changes
+                </button>
             </div>
         )
     }

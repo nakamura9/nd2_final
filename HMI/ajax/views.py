@@ -15,8 +15,8 @@ def get_status(request):
     resp = CONN.read(4)
     status = {
         'machineStatus': 'AUTO' if resp[1] else 'Manual',
-        'boardCount': resp[2],
-        'errorsFound': random.randint(1, 100)
+        'boardCount': 0,
+        'errorsFound': 0
     }
     return JsonResponse(status)
 
@@ -33,7 +33,6 @@ def get_color_status(request):
 
 @csrf_exempt
 def get_snapshot(request):
-    print(request.FILES)
     myfile = request.FILES['snapshot']
     fs = FileSystemStorage()
     filename = fs.save(myfile.name, myfile)
@@ -43,7 +42,7 @@ def get_snapshot(request):
     print(ed.error)
     update_event('{} error detected'.format(ed.error))
     if ed.error:
-        CONN.write(bytes([b'H', b'9', ed.error, ed.error, 0, 0, b'F']))
+        CONN.write(bytes([72, 39, ed.error, ed.error, 0, 0, 70]))
         resp = CONN.read(1)
     return JsonResponse({'status': 'ok'})
 
@@ -105,9 +104,12 @@ def toggle_agitator(request):
     print(resp)
     return JsonResponse({'status': 'ok'})
 
+
+@csrf_exempt
 def get_register_positions(request):
     #testing with 4 
-    CONN.write(b'H944000F')
+    #print(request.GET)
+    CONN.write(bytes([72, 39, 10, 10, 0, 0, 70]))
     resp = CONN.read(1)
     return JsonResponse({'status': 'ok'})
 

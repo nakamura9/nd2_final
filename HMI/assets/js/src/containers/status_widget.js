@@ -12,7 +12,7 @@ class StatusWidget extends Component{
     }
 
     componentDidMount(){
-        //setInterval(this.tick, 3000);
+        setInterval(this.tick, 3000);
     }
 
     tick = () =>{

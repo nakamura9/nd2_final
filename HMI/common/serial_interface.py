@@ -8,9 +8,5 @@ config = json.load(config_file)
 CONN = serial.Serial(write_timeout=0)
 CONN.port = config['port']
 CONN.baudrate = config['baud']
+CONN.open()
 
-try:
-    CONN.open()
-except:
-    pass
-#poll the sensor for the camera trigger
