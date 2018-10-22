@@ -6,7 +6,7 @@ class EventsList extends Component{
         events: []
     }
     componentDidMount(){
-        setInterval(this.tick, 1000);
+        //setInterval(this.tick, 1000);
     }
 
     tick = () =>{

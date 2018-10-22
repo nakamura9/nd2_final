@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'ajax',
     'dashboard',
     'common',
-    'webpack_loader'
     
 ]
 
@@ -129,6 +128,8 @@ STATICFILES_DIRS = (
 )
 STATIC_ROOT = os.path.join(BASE_DIR, 'common', 'static')
 
+
+
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'js/bundles/',
@@ -138,17 +139,6 @@ WEBPACK_LOADER = {
 
 LOGIN_URL = '/dashboard/login/'
 LOGIN_REDIRECT_URL = '/dashboard/dashboard/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets', 'js'),
-)
-
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'assets', 'js', 'webpack-stats.json'),
-    }
-}
 
 
 MEDIA_URL = '/media/'
