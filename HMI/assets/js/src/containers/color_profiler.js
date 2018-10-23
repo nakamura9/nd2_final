@@ -77,7 +77,7 @@ class ColorProfiler extends Component{
 
     updateSetColor = () => {
         axios.post('/api/set-color-setpoint/',
-            {color: encodeURIComponent(JSON.stringify(this.state.setColor))}
+            this.state.setColor
         )
     }
     setColorHandler = (evt) =>{

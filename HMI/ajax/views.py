@@ -95,6 +95,7 @@ def set_color_setpoint(request):
     #rgb must be less than 256
     # message code 8 corresponds to int 56
     color_data = json.loads(request.body)
+    print(color_data)
     msg = [HEADER, 
             56, 
             int(color_data['red']), 
