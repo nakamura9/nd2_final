@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webpack_loader',
     'ajax',
     'dashboard',
     'common',
-    'webpack_loader'
     
 ]
 
@@ -127,6 +127,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
 STATIC_ROOT = os.path.join(BASE_DIR, 'common', 'static')
+
+
 
 WEBPACK_LOADER = {
     'DEFAULT': {

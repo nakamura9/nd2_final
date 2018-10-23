@@ -9,5 +9,5 @@ CONN = serial.Serial(write_timeout=0)
 CONN.port = '/dev/ttyUSB0'
 '''config['port']'''
 CONN.baudrate = config['baud']
-CONN.open()
+#CONN.open()
 

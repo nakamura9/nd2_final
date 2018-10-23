@@ -3,6 +3,7 @@ import RadioControls from '../components/mode_radio_controls';
 import ToggleButton from '../components/toggle_button';
 import CompoundNumberInput from '../components/compound_number_input';
 import axios from 'axios';
+import $ from 'jquery';
 
 class ControlsWidget extends Component{
     state = {
@@ -42,14 +43,12 @@ class ControlsWidget extends Component{
 
     setRegister = () =>{
         console.log(this.state.printerOne);
-        axios({
-            method: 'GET',
-            url: '/api/get-register-positions',
-            data: {
-                'unitTwo': this.state.printerOne,
-                'unitOne': this.state.printerTwo
-            }
-        });
+        axios.post('/api/get-register-positions',
+        {
+            'unitTwo': this.state.printerOne,
+            'unitOne': this.state.printerTwo
+        }
+        );
     }
 
     render(){

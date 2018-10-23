@@ -7,19 +7,26 @@ import axios from 'axios';
 class ColorProfiler extends Component{
     state = {
         currentColor: "",
-        setColor: "",
         status: {
-            currentColor: "",
+            currentColor: {
+                red: 0,
+                green: 0,
+                blue: 0
+            },
             status: "OFF"
         },
         mode: "auto",
-        setColor: "",
+        setColor: {
+            red: 0,
+            green: 0,
+            blue: 0
+        },
         pigmentValve: false,
         baseValve: false,
         agitator: true
     }
     componentDidMount(){
-        setInterval(this.tick, 3000);
+        //setInterval(this.tick, 3000);
     }
 
     tick = () =>{
@@ -68,14 +75,22 @@ class ColorProfiler extends Component{
         })
     }
 
-
+    updateSetColor = () => {
+        axios.post('/api/set-color-setpoint/',
+            this.state.setColor
+        )
+    }
     setColorHandler = (evt) =>{
-        axios({
-            method: 'GET',
-            url: '/api/set-color-setpoint',
-            data: {'color': evt.target.value}
-        })
-        this.setState({setColor: evt.target.value});
+        const colorName = evt.target.name;
+        const colorValue = evt.target.value;
+        let newSetColor = this.state.setColor;
+        console.log('progress');
+        if(colorValue >= 0 && colorValue < 256){
+            newSetColor[colorName] = evt.target.value;
+            this.setState({setColor: newSetColor});
+        }else{
+            alert('Please insert a value less than 256 ');
+        }
     }
 
 
@@ -102,9 +117,7 @@ class ColorProfiler extends Component{
                         run={this.state.agitator}
                         toggle={this.agitatorToggle}
                         onLabel='Close'
-                        offLabel='Open'/>
-                    
-                    
+                        offLabel='Open'/>           
                 </div>
         
         return(
@@ -125,21 +138,43 @@ class ColorProfiler extends Component{
                         </tr>
                         <tr>
                             <td>Current Color Value</td>
-                            <td>{this.state.status.currentColor}</td>
+                            <td><ul>
+                                    <li>Red: {this.state.status.currentColor.red}</li>
+                                    <li>Green: {this.state.status.currentColor.green}</li>
+                                    <li>Blue: {this.state.status.currentColor.blue}</li>
+                                </ul></td>
                         </tr>
-                        <tr>
-                            <td>Set Color Value</td>
-                            <td>{this.state.setColor}</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
                 <h5>Color Set Point</h5>
-                <input 
+                <span>Red(0-255)</span><input 
                         className="form-control"
                         onChange={this.setColorHandler}
-                        placeholder="rrrgggbbb"
-                        type="text"
-                        />
+                        placeholder="rrr"
+                        type="number"
+                        name="red"
+                        value={this.state.setColor.red}
+                        /><br />
+                <span>Green(0-255)</span><input 
+                        className="form-control"
+                        onChange={this.setColorHandler}
+                        placeholder="ggg"
+                        type="number"
+                        name="green"
+                        value={this.state.setColor.green}
+                        /><br />
+                <span>Blue(0-255)</span><input 
+                        className="form-control"
+                        onChange={this.setColorHandler}
+                        placeholder="bbb"
+                        type="number"
+                        name="blue"
+                        value={this.state.setColor.blue}
+                        /><br />
+                <button className="btn btn-success"
+                    onClick={this.updateSetColor}>
+                    Set Color</button>
                 {controls}
             </div>
         );

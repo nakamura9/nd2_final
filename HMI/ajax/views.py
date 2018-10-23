@@ -3,12 +3,13 @@ from django.http import JsonResponse, HttpResponseRedirect
 import random
 import os
 from django.views.decorators.csrf import csrf_exempt
-
+import json
 from django.core.files.storage import FileSystemStorage
 
 from common.serial_interface import CONN
 from common.vars import  ImageProcessor, update_event, EVENTS, set_global_interest_points, ErrorDetector
-
+HEADER = int.from_bytes(b'H', byteorder='big')
+FOOTER = int.from_bytes(b'F', byteorder='big')
 
 def get_status(request):
     CONN.write(b'H100000F')
@@ -23,12 +24,20 @@ def get_status(request):
 def get_color_status(request):
     CONN.write(b'H200000F')
     resp = CONN.read(6)
-    print(resp[2:5])
-    status = {
-        'status': 'Auto' if resp[1] else 'Manual',
-        'currentColor': str(resp[2]) + str(resp[3]) + 
-            str(resp[4])
-    }
+    while not resp[1] == HEADER and resp[5] == FOOTER:
+        red = int.from_bytes(resp[2], byteorder='little')
+        green = int.from_bytes(resp[3], byteorder='little')
+        blue = int.from_bytes(resp[4], byteorder='little')
+        print(red)
+        status = {
+            'status': 'Auto' if resp[1] else 'Manual',
+            'currentColor': {
+                'red': red,
+                'green': green,
+                'blue': blue
+            }
+        }
+        resp = CONN.read(6)
     return JsonResponse(status)
 
 @csrf_exempt
@@ -80,8 +89,22 @@ def toggle_color_mode(request):
     print(resp)
     return JsonResponse({'status': 'ok'})
 
+@csrf_exempt
 def set_color_setpoint(request):
-    CONN.write(b'H8' + bytes(request.GET['color']) +  b'00F')
+    #message of three bytes 
+    #rgb must be less than 256
+    # message code 8 corresponds to int 56
+    color_data = json.loads(request.body)
+    print(color_data)
+    msg = [HEADER, 
+            56, 
+            int(color_data['red']), 
+            int(color_data['green']), 
+            int(color_data['blue']), 
+            0,
+            0, 
+            FOOTER]
+    CONN.write(bytes(msg))
     resp = CONN.read(1)
     print(resp)
     return JsonResponse({'status': 'ok'})
@@ -104,13 +127,19 @@ def toggle_agitator(request):
     print(resp)
     return JsonResponse({'status': 'ok'})
 
-
 @csrf_exempt
 def get_register_positions(request):
-    #testing with 4 
-    #print(request.GET)
-    CONN.write(bytes([72, 39, 10, 10, 0, 0, 70]))
+    data = json.loads(request.body)
+     
+    CONN.write(bytes([72,
+       39, 
+       int(data['unitOne']),
+       int(data['unitTwo']),
+       0, 
+       0, 
+       70]))
     resp = CONN.read(1)
+    
     return JsonResponse({'status': 'ok'})
 
 def get_events(request):
