@@ -17,11 +17,11 @@ btn = Button(2)
 def upload_img():
     global img_path
     url = 'http://localhost:8000/api/get-snapshot'
-    files = {'snapshot': open(img_path, 'rb')}
+    files = {'snapshot': open('img.jpeg', 'rb')}
     requests.post(url, files=files)
 
 while RUNNING:
     btn.wait_for_press()
     btn.wait_for_release()
-    camera.capture(img_path)
+    camera.capture('img.jpeg')
     upload_img()
