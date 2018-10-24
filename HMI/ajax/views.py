@@ -8,8 +8,9 @@ from django.core.files.storage import FileSystemStorage
 
 from common.serial_interface import CONN
 from common.vars import  ImageProcessor, update_event, EVENTS, set_global_interest_points, ErrorDetector
-HEADER = int.from_bytes(b'H', byteorder='big')
-FOOTER = int.from_bytes(b'F', byteorder='big')
+import codecs
+HEADER = int(codecs.encode(b'H', 'hex'))
+FOOTER = int(codecs.encode(b'F', 'hex'))
 
 def get_status(request):
     CONN.write(b'H100000F')
@@ -25,10 +26,12 @@ def get_color_status(request):
     CONN.write(b'H200000F')
     resp = CONN.read(6)
     while not resp[1] == HEADER and resp[5] == FOOTER:
-        red = int.from_bytes(resp[2], byteorder='little')
-        green = int.from_bytes(resp[3], byteorder='little')
-        blue = int.from_bytes(resp[4], byteorder='little')
-        print(red)
+        
+        
+        
+        red = int(codecs.encode(resp[2], 'hex'))
+        green = int(codecs.encode(resp[3], 'hex'))
+        blue = int(codecs.encode(resp[4], 'hex'))
         status = {
             'status': 'Auto' if resp[1] else 'Manual',
             'currentColor': {

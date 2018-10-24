@@ -6,7 +6,7 @@ from picamera import PiCamera
 
 camera = PiCamera()
 camera.resolution = (640, 320)
-camera.start_preview()
+camera.start_preview(window=(0,0,320,240), alpha=128)
 # Camera warm-up time
 sleep(2)
 
@@ -21,7 +21,8 @@ def upload_img():
     requests.post(url, files=files)
 
 while RUNNING:
+    print('looping')
     btn.wait_for_press()
-    btn.wait_for_release()
     camera.capture('img.jpeg')
     upload_img()
+    btn.wait_for_release()
